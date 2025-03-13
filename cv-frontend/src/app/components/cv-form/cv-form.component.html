@@ -1,0 +1,84 @@
+<h2>Create / Edit CV</h2>
+
+<form style="overflow: auto;" [formGroup]="cvForm" (ngSubmit)="submitForm()">
+  <!-- Personal Information -->
+  <fieldset>
+    <legend>Personal Information</legend>
+    <label>Name:</label>
+    <input type="text" formControlName="name" required>
+    <div *ngIf="cvForm.controls['name'].invalid && cvForm.controls['name'].touched" class="error">
+      Name is required.
+    </div>
+
+    <label>Email:</label>
+    <input type="email" formControlName="email" required>
+    <div *ngIf="cvForm.controls['email'].invalid && cvForm.controls['email'].touched" class="error">
+      Enter a valid email.
+    </div>
+
+    <label>Phone:</label>
+    <input type="text" formControlName="phone" required>
+    <div *ngIf="cvForm.controls['phone'].invalid && cvForm.controls['phone'].touched" class="error">
+      Phone is required.
+    </div>
+
+    <label>Professional Summary:</label>
+    <textarea formControlName="summary"></textarea>
+  </fieldset>
+
+  <!-- Work Experience -->
+  <fieldset>
+    <legend>Work Experience</legend>
+    <div formArrayName="workExperience">
+      <div *ngFor="let exp of workExperience.controls; let i = index" [formGroupName]="i">
+        <label>Company:</label>
+        <input type="text" formControlName="company" required>
+
+        <label>Job Title:</label>
+        <input type="text" formControlName="jobTitle" required>
+
+        <label>Years:</label>
+        <input type="text" formControlName="years" required>
+
+        <button type="button" (click)="removeWorkExperience(i)">Remove</button>
+      </div>
+    </div>
+    <button type="button" (click)="addWorkExperience()">Add Work Experience</button>
+  </fieldset>
+
+  <!-- Education -->
+  <fieldset>
+    <legend>Education</legend>
+    <div formArrayName="education">
+        @for (edu of education.controls; track $index) {
+            <div [formGroupName]="$index">
+                <label>Institution:</label>
+                <input type="text" formControlName="institution" required>
+            
+                <label>Degree:</label>
+                <input type="text" formControlName="degree" required>
+            
+                <label>Year:</label>
+                <input type="text" formControlName="year" required>
+            
+                <button type="button" (click)="removeEducation($index)">Remove</button>
+              </div>
+    }
+    </div>
+    <button type="button" (click)="addEducation()">Add Education</button>
+  </fieldset>
+
+  <!-- Skills -->
+  <fieldset>
+    <legend>Skills</legend>
+    <input type="text" formControlName="skills" placeholder="Enter skills separated by commas">
+  </fieldset>
+
+  <!-- Submit Button -->
+  <!-- [disabled]="cvForm.invalid" -->
+  <button type="submit" >Save CV</button>
+</form>
+
+
+<!-- Back Button -->
+<button (click)="closeDialog()">Back to CV List</button>

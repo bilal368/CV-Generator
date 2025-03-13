@@ -1,0 +1,20 @@
+<h2>CV List</h2>
+<button (click)="openAddCvDialog()">Add New CV</button>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Actions</th>
+  </tr>
+  @for (cv of cvs; track $index) {
+  <tr >
+    <td>{{ cv.name }}</td>
+    <td>{{ cv.email }}</td>
+    <td>
+        <button (click)="editCV(cv)">Edit</button>
+        <button (click)="deleteCV(cv.id!)">Delete</button>
+        <button (click)="generatePDF(cv.id!)">Generate PDF</button>
+    </td>
+  </tr>
+}
+</table>
